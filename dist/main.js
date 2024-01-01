@@ -8,6 +8,7 @@ async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     const PORT = process.env.PORT || 3000;
     try {
+        app.setGlobalPrefix('/api/v1');
         await app.listen(PORT, '0.0.0.0');
         console.log(`${new Date()}`);
         console.log('server running at: http://localhost:' + PORT);

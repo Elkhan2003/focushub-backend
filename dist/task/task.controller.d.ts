@@ -7,10 +7,18 @@ export declare class TaskController {
         id: number;
         name: string;
         age: number;
+        isDone: boolean;
     }[];
     createTask(dto: TaskDto): {
         id: number;
         name: string;
         age: number;
+        isDone: boolean;
     }[];
+    updateTask(id: string): {
+        id: number;
+        name: string;
+        age: number;
+        isDone: boolean;
+    };
 }

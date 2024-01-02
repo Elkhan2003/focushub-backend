@@ -7,7 +7,8 @@ export class TaskService {
 		{
 			id: 1,
 			name: 'Elcho911',
-			age: 20
+			age: 20,
+			isDone: false
 		}
 	];
 	getAll() {
@@ -15,12 +16,17 @@ export class TaskService {
 	}
 	create(dto: TaskDto) {
 		const newId = this.data.reduce((_, task) => task.id, 0) + 1;
-		console.log(newId);
 		this.data.push({
 			id: newId,
 			name: dto.name,
-			age: dto.age
+			age: dto.age,
+			isDone: false
 		});
 		return this.data;
+	}
+	update(id: string) {
+		const updateData = this.data.find((item) => item.id === +id);
+		updateData.isDone = !updateData.isDone;
+		return updateData;
 	}
 }

@@ -5,10 +5,18 @@ export declare class TaskService {
         id: number;
         name: string;
         age: number;
+        isDone: boolean;
     }[];
     create(dto: TaskDto): {
         id: number;
         name: string;
         age: number;
+        isDone: boolean;
     }[];
+    update(id: string): {
+        id: number;
+        name: string;
+        age: number;
+        isDone: boolean;
+    };
 }

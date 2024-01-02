@@ -9,6 +9,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskService = void 0;
 const common_1 = require("@nestjs/common");
 let TaskService = class TaskService {
+    constructor() {
+        this.data = [
+            {
+                name: 'Elcho911',
+                age: 20
+            }
+        ];
+    }
+    getAll() {
+        return this.data;
+    }
+    create(dto) {
+        this.data.push({
+            name: dto.name,
+            age: dto.age
+        });
+        return this.data;
+    }
 };
 exports.TaskService = TaskService;
 exports.TaskService = TaskService = __decorate([

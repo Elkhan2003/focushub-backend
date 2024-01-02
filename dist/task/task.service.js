@@ -12,6 +12,7 @@ let TaskService = class TaskService {
     constructor() {
         this.data = [
             {
+                id: 1,
                 name: 'Elcho911',
                 age: 20
             }
@@ -21,7 +22,10 @@ let TaskService = class TaskService {
         return this.data;
     }
     create(dto) {
+        const newId = this.data.reduce((_, task) => task.id, 0) + 1;
+        console.log(newId);
         this.data.push({
+            id: newId,
             name: dto.name,
             age: dto.age
         });

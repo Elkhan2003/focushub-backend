@@ -19,4 +19,10 @@ export declare class TaskService {
         age: number;
         isDone: boolean;
     };
+    delete(id: string): {
+        id: number;
+        name: string;
+        age: number;
+        isDone: boolean;
+    };
 }

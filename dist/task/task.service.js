@@ -37,6 +37,14 @@ let TaskService = class TaskService {
         updateData.isDone = !updateData.isDone;
         return updateData;
     }
+    delete(id) {
+        const index = this.data.findIndex((item) => item.id === +id);
+        if (index !== -1) {
+            const deletedData = this.data.splice(index, 1);
+            return deletedData[0];
+        }
+        throw new common_1.NotFoundException(`Task with ID ${id} not found`);
+    }
 };
 exports.TaskService = TaskService;
 exports.TaskService = TaskService = __decorate([

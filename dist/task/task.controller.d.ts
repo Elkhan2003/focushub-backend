@@ -21,4 +21,10 @@ export declare class TaskController {
         age: number;
         isDone: boolean;
     };
+    deleteTask(id: string): {
+        id: number;
+        name: string;
+        age: number;
+        isDone: boolean;
+    };
 }

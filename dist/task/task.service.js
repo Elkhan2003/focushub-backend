@@ -9,21 +9,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskService = void 0;
 const common_1 = require("@nestjs/common");
 let TaskService = class TaskService {
-    create(createTaskDto) {
-        return 'This action adds a new task';
-    }
-    findAll() {
-        return `This action returns all task`;
-    }
-    findOne(id) {
-        return `This action returns a #${id} task`;
-    }
-    update(id, updateTaskDto) {
-        return `This action updates a #${id} task`;
-    }
-    remove(id) {
-        return `This action removes a #${id} task`;
-    }
 };
 exports.TaskService = TaskService;
 exports.TaskService = TaskService = __decorate([

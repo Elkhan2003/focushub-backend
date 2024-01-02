@@ -6,20 +6,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.CrudService = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
-const crud_module_1 = require("./crud/crud.module");
-const task_module_1 = require("./task/task.module");
-let AppModule = class AppModule {
+let CrudService = class CrudService {
+    create(createCrudDto) {
+        return 'This action adds a new crud';
+    }
+    findAll() {
+        return `This action returns all crud`;
+    }
+    findOne(id) {
+        return `This action returns a #${id} crud`;
+    }
+    update(id, updateCrudDto) {
+        return `This action updates a #${id} crud`;
+    }
+    remove(id) {
+        return `This action removes a #${id} crud`;
+    }
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
-    (0, common_1.Module)({
-        imports: [crud_module_1.CrudModule, task_module_1.TaskModule],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService]
-    })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+exports.CrudService = CrudService;
+exports.CrudService = CrudService = __decorate([
+    (0, common_1.Injectable)()
+], CrudService);
+//# sourceMappingURL=crud.service.js.map

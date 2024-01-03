@@ -16,6 +16,16 @@ let TaskService = class TaskService {
     constructor(prisma) {
         this.prisma = prisma;
     }
+    async getById(id) {
+        const data = await this.prisma.task.findUnique({
+            where: {
+                id: +id
+            }
+        });
+        if (!data)
+            throw new common_1.NotFoundException(`Task ${id} not found`);
+        return data;
+    }
     async getAll() {
         const data = await this.prisma.task.findMany();
         return [{ message: 'Get', data }];
@@ -30,6 +40,7 @@ let TaskService = class TaskService {
         return [{ message: 'Create', data }];
     }
     async update(id, dto) {
+        await this.getById(id);
         const data = await this.prisma.task.update({
             where: {
                 id: +id
@@ -43,6 +54,7 @@ let TaskService = class TaskService {
         return [{ message: 'Update', data }];
     }
     async delete(id) {
+        await this.getById(id);
         const data = await this.prisma.task.delete({
             where: {
                 id: +id

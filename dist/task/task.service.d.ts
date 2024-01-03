@@ -3,6 +3,12 @@ import { PrismaService } from '../database/prisma.service';
 export declare class TaskService {
     private prisma;
     constructor(prisma: PrismaService);
+    getById(id: string): Promise<{
+        id: number;
+        name: string;
+        age: number;
+        isDone: boolean;
+    }>;
     getAll(): Promise<{
         message: string;
         data: {

@@ -28,8 +28,8 @@ export class TaskController {
 	}
 
 	@Patch(':id')
-	updateTask(@Param('id') id: string) {
-		return this.taskService.update(id);
+	updateTask(@Param('id') id: string, @Body() dto: TaskDto) {
+		return this.taskService.update(id, dto);
 	}
 
 	@Delete(':id')

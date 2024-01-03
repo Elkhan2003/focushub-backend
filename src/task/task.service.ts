@@ -1,40 +1,42 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { TaskDto } from './dto/task.dto';
+import { PrismaService } from '../database/prisma.service';
 
 @Injectable()
 export class TaskService {
-	private data = [
-		{
-			id: 1,
-			name: 'Elcho911',
-			age: 20,
-			isDone: false
-		}
-	];
-	getAll() {
-		return this.data;
+	constructor(private prisma: PrismaService) {}
+	async getAll() {
+		const data = await this.prisma.task.findMany();
+		return [{ message: 'Get', data }];
 	}
-	create(dto: TaskDto) {
-		const newId = this.data.reduce((_, task) => task.id, 0) + 1;
-		this.data.push({
-			id: newId,
-			name: dto.name,
-			age: dto.age,
-			isDone: false
+	async create(dto: TaskDto) {
+		const data = await this.prisma.task.create({
+			data: {
+				name: dto.name,
+				age: dto.age
+			}
 		});
-		return this.data;
+		return [{ message: 'Create', data }];
 	}
-	update(id: string) {
-		const updateData = this.data.find((item) => item.id === +id);
-		updateData.isDone = !updateData.isDone;
-		return updateData;
+	async update(id: string, dto: TaskDto) {
+		const data = await this.prisma.task.update({
+			where: {
+				id: +id
+			},
+			data: {
+				name: dto.name,
+				age: dto.age,
+				isDone: true
+			}
+		});
+		return [{ message: 'Update', data }];
 	}
-	delete(id: string) {
-		const index = this.data.findIndex((item) => item.id === +id);
-		if (index !== -1) {
-			const deletedData = this.data.splice(index, 1);
-			return deletedData[0];
-		}
-		throw new NotFoundException(`Task with ID ${id} not found`);
+	async delete(id: string) {
+		const data = await this.prisma.task.delete({
+			where: {
+				id: +id
+			}
+		});
+		return [{ message: 'Delete', data }];
 	}
 }

@@ -1,9 +1,9 @@
 -- CreateTable
-CREATE TABLE "Task" (
+CREATE TABLE "testTask" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "age" INTEGER NOT NULL,
     "isDone" BOOLEAN NOT NULL DEFAULT false,
 
-    CONSTRAINT "Task_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "testTask_pkey" PRIMARY KEY ("id")
 );

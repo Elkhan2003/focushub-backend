@@ -17,7 +17,7 @@ let TaskService = class TaskService {
         this.prisma = prisma;
     }
     async getById(id) {
-        const data = await this.prisma.task.findUnique({
+        const data = await this.prisma.testTask.findUnique({
             where: {
                 id: +id
             }
@@ -27,11 +27,11 @@ let TaskService = class TaskService {
         return data;
     }
     async getAll() {
-        const data = await this.prisma.task.findMany();
+        const data = await this.prisma.testTask.findMany();
         return [{ message: 'Get', data }];
     }
     async create(dto) {
-        const data = await this.prisma.task.create({
+        const data = await this.prisma.testTask.create({
             data: {
                 name: dto.name,
                 age: dto.age
@@ -41,7 +41,7 @@ let TaskService = class TaskService {
     }
     async update(id, dto) {
         await this.getById(id);
-        const data = await this.prisma.task.update({
+        const data = await this.prisma.testTask.update({
             where: {
                 id: +id
             },
@@ -55,7 +55,7 @@ let TaskService = class TaskService {
     }
     async delete(id) {
         await this.getById(id);
-        const data = await this.prisma.task.delete({
+        const data = await this.prisma.testTask.delete({
             where: {
                 id: +id
             }

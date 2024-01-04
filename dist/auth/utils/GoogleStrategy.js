@@ -30,9 +30,9 @@ let GoogleStrategy = class GoogleStrategy extends (0, passport_1.PassportStrateg
         this.authService = authService;
     }
     async validate(accessToken, refreshToken, profile) {
-        console.log('accessToken', accessToken);
-        console.log('refreshToken', refreshToken);
-        this.authService.validateUser(profile);
+        const user = await this.authService.validateUser(profile);
+        console.log(user);
+        return user || null;
     }
 };
 exports.GoogleStrategy = GoogleStrategy;

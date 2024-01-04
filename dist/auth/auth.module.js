@@ -12,6 +12,7 @@ const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
 const database_module_1 = require("../database/database.module");
 const GoogleStrategy_1 = require("./utils/GoogleStrategy");
+const Serializer_1 = require("./utils/Serializer");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -21,6 +22,7 @@ exports.AuthModule = AuthModule = __decorate([
         controllers: [auth_controller_1.AuthController],
         providers: [
             GoogleStrategy_1.GoogleStrategy,
+            Serializer_1.SessionSerializer,
             {
                 provide: 'AUTH_SERVICE',
                 useClass: auth_service_1.AuthService

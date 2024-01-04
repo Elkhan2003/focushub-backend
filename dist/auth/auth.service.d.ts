@@ -19,4 +19,20 @@ export declare class AuthService {
         createdAt: string;
         updatedAt: string;
     }>;
+    findUser(id: number): Promise<{
+        id: number;
+        firstName: string;
+        lastName: string;
+        role: import("@prisma/client").$Enums.UserRole;
+        auth: string;
+        login: string;
+        password: string;
+        isActive: boolean;
+        photo: string;
+        phone: string;
+        isPhoneVerified: boolean;
+        traffic: string;
+        createdAt: string;
+        updatedAt: string;
+    }>;
 }

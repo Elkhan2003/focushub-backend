@@ -18,15 +18,13 @@ let AuthService = class AuthService {
         this.prisma = prisma;
     }
     async validateUser(profile) {
-        console.log('AuthService');
         try {
-            const profileData = await this.prisma.user.findFirst({
+            const profileData = await this.prisma.user.findUnique({
                 where: {
                     login: profile._json.email
                 }
             });
             if (!profileData) {
-                console.log('User not found! - Creating...');
                 return await this.prisma.user.create({
                     data: {
                         auth: 'Google',
@@ -41,13 +39,19 @@ let AuthService = class AuthService {
                 });
             }
             else {
-                console.log('User found!');
                 return profileData;
             }
         }
         catch (err) {
             console.log(`${err}`);
         }
+    }
+    async findUser(id) {
+        return this.prisma.user.findUnique({
+            where: {
+                id: id
+            }
+        });
     }
 };
 exports.AuthService = AuthService;

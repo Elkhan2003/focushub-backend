@@ -13,12 +13,18 @@ const app_service_1 = require("./app.service");
 const crud_module_1 = require("./crud/crud.module");
 const task_module_1 = require("./task/task.module");
 const auth_module_1 = require("./auth/auth.module");
+const passport_1 = require("@nestjs/passport");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [crud_module_1.CrudModule, task_module_1.TaskModule, auth_module_1.AuthModule],
+        imports: [
+            crud_module_1.CrudModule,
+            task_module_1.TaskModule,
+            auth_module_1.AuthModule,
+            passport_1.PassportModule.register({ session: true })
+        ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService]
     })

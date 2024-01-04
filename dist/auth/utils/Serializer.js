@@ -12,32 +12,27 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GoogleStrategy = void 0;
+exports.SessionSerializer = void 0;
 const common_1 = require("@nestjs/common");
 const passport_1 = require("@nestjs/passport");
-const passport_google_oauth20_1 = require("passport-google-oauth20");
 const auth_service_1 = require("../auth.service");
-let GoogleStrategy = class GoogleStrategy extends (0, passport_1.PassportStrategy)(passport_google_oauth20_1.Strategy) {
+let SessionSerializer = class SessionSerializer extends passport_1.PassportSerializer {
     constructor(authService) {
-        super({
-            clientID: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: process.env.NODE_ENV === 'development'
-                ? `${process.env.BACKEND_BASE_URL_DEV}/api/v1/auth/callback/google`
-                : `${process.env.BACKEND_BASE_URL_PROD}/api/v1/auth/callback/google`,
-            scope: ['profile', 'email']
-        });
+        super();
         this.authService = authService;
     }
-    async validate(accessToken, refreshToken, profile, done) {
-        const user = await this.authService.validateUser(profile);
-        return done(null, user || null);
+    serializeUser(user, done) {
+        return done(null, user);
+    }
+    async deserializeUser(payload, done) {
+        const user = await this.authService.findUser(payload.id);
+        return user ? done(null, user) : done(null, null);
     }
 };
-exports.GoogleStrategy = GoogleStrategy;
-exports.GoogleStrategy = GoogleStrategy = __decorate([
+exports.SessionSerializer = SessionSerializer;
+exports.SessionSerializer = SessionSerializer = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, common_1.Inject)('AUTH_SERVICE')),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
-], GoogleStrategy);
-//# sourceMappingURL=GoogleStrategy.js.map
+], SessionSerializer);
+//# sourceMappingURL=Serializer.js.map

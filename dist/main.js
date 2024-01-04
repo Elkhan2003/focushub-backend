@@ -4,11 +4,23 @@ const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
 const dotenv = require("dotenv");
 dotenv.config();
+const session = require("express-session");
+const passport = require("passport");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     const PORT = process.env.PORT || 3000;
+    app.setGlobalPrefix('/api/v1');
+    app.use(session({
+        secret: 'Elcho911∑å∂®∆√˜∆´ß∫¬∆å´ƒø˙¥ª•¶™£ƒ˙ˆ∆å∫˚¬®√',
+        saveUninitialized: false,
+        resave: false,
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24 * 7
+        }
+    }));
+    app.use(passport.initialize());
+    app.use(passport.session());
     try {
-        app.setGlobalPrefix('/api/v1');
         await app.listen(PORT, '0.0.0.0');
         console.log(`${new Date()}`);
         console.log('server running at: http://localhost:' + PORT);

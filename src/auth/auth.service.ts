@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { Request, Response } from 'express';
 import { PrismaService } from '../database/prisma.service';
 import { Profile } from 'passport-google-oauth20';
 import * as moment from 'moment';
+import process from 'process';
 
 @Injectable()
 export class AuthService {
@@ -41,5 +43,50 @@ export class AuthService {
 				id: id
 			}
 		});
+	}
+
+	handleLogin() {
+		return { message: 'Google Authentication' };
+	}
+
+	handleRedirect(res: Response) {
+		return res.redirect(
+			process.env.BACKEND_TEST_MODE === 'active'
+				? process.env.NODE_ENV === 'development'
+					? `${process.env.FRONTEND_BASE_URL_DEV}/api/v1/auth/status`
+					: `${process.env.FRONTEND_BASE_URL_PROD}/api/v1/auth/status`
+				: process.env.NODE_ENV === 'development'
+					? `${process.env.FRONTEND_BASE_URL_DEV}/`
+					: `${process.env.FRONTEND_BASE_URL_PROD}/`
+		);
+	}
+
+	user(req: Request) {
+		if (req.user) {
+			return { success: true, user: req.user };
+		} else {
+			return { success: false, user: null };
+		}
+	}
+
+	logout(req: Request, res: Response) {
+		req.logout(function (err) {
+			if (err) {
+				return 'Error';
+			}
+			return res.redirect(
+				process.env.NODE_ENV === 'development'
+					? process.env.FRONTEND_BASE_URL_DEV!
+					: process.env.FRONTEND_BASE_URL_PROD!
+			);
+		});
+	}
+
+	userStatus(req: Request) {
+		if (req.user) {
+			return { message: 'Authenticated', user: req.user };
+		} else {
+			return { message: 'Not Authenticated' };
+		}
 	}
 }

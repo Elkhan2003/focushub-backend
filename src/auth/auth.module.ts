@@ -9,6 +9,7 @@ import { SessionSerializer } from './utils/Serializer';
 	imports: [DatabaseModule],
 	controllers: [AuthController],
 	providers: [
+		AuthService,
 		GoogleStrategy,
 		SessionSerializer,
 		{

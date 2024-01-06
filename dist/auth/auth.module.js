@@ -21,6 +21,7 @@ exports.AuthModule = AuthModule = __decorate([
         imports: [database_module_1.DatabaseModule],
         controllers: [auth_controller_1.AuthController],
         providers: [
+            auth_service_1.AuthService,
             GoogleStrategy_1.GoogleStrategy,
             Serializer_1.SessionSerializer,
             {

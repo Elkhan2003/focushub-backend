@@ -10,6 +10,10 @@ const client_1 = require("@prisma/client");
 const prisma_session_store_1 = require("@quixo3/prisma-session-store");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    app.enableCors({
+        origin: 'http://localhost:3000',
+        credentials: true
+    });
     const PORT = process.env.PORT || 3000;
     app.setGlobalPrefix('/api/v1');
     app.use(session({

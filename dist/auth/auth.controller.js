@@ -15,22 +15,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const Guards_1 = require("./utils/Guards");
+const auth_service_1 = require("./auth.service");
 let AuthController = class AuthController {
+    constructor(authService) {
+        this.authService = authService;
+    }
     handleLogin() {
-        return { message: 'Google Authentication' };
+        return this.authService.handleLogin();
     }
     handleRedirect(res) {
-        return res.redirect(process.env.NODE_ENV === 'development'
-            ? `${process.env.FRONTEND_BASE_URL_DEV}/api/v1/auth/status`
-            : `${process.env.FRONTEND_BASE_URL_PROD}/api/v1/auth/status`);
+        return this.authService.handleRedirect(res);
     }
-    user(request) {
-        if (request.user) {
-            return { message: 'Authenticated', user: request.user };
-        }
-        else {
-            return { message: 'Not Authenticated' };
-        }
+    user(req) {
+        return this.authService.user(req);
+    }
+    logout(req, res) {
+        return this.authService.logout(req, res);
+    }
+    userStatus(req) {
+        return this.authService.userStatus(req);
     }
 };
 exports.AuthController = AuthController;
@@ -50,13 +53,29 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "handleRedirect", null);
 __decorate([
-    (0, common_1.Get)('status'),
+    (0, common_1.Get)('user'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "user", null);
+__decorate([
+    (0, common_1.Get)('logout'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "logout", null);
+__decorate([
+    (0, common_1.Get)('status'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "userStatus", null);
 exports.AuthController = AuthController = __decorate([
-    (0, common_1.Controller)('auth')
+    (0, common_1.Controller)('auth'),
+    __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthController);
 //# sourceMappingURL=auth.controller.js.map

@@ -13,6 +13,7 @@ exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../database/prisma.service");
 const moment = require("moment");
+const process_1 = require("process");
 let AuthService = class AuthService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -52,6 +53,44 @@ let AuthService = class AuthService {
                 id: id
             }
         });
+    }
+    handleLogin() {
+        return { message: 'Google Authentication' };
+    }
+    handleRedirect(res) {
+        return res.redirect(process_1.default.env.BACKEND_TEST_MODE === 'active'
+            ? process_1.default.env.NODE_ENV === 'development'
+                ? `${process_1.default.env.FRONTEND_BASE_URL_DEV}/api/v1/auth/status`
+                : `${process_1.default.env.FRONTEND_BASE_URL_PROD}/api/v1/auth/status`
+            : process_1.default.env.NODE_ENV === 'development'
+                ? `${process_1.default.env.FRONTEND_BASE_URL_DEV}/`
+                : `${process_1.default.env.FRONTEND_BASE_URL_PROD}/`);
+    }
+    user(req) {
+        if (req.user) {
+            return { success: true, user: req.user };
+        }
+        else {
+            return { success: false, user: null };
+        }
+    }
+    logout(req, res) {
+        req.logout(function (err) {
+            if (err) {
+                return 'Error';
+            }
+            return res.redirect(process_1.default.env.NODE_ENV === 'development'
+                ? process_1.default.env.FRONTEND_BASE_URL_DEV
+                : process_1.default.env.FRONTEND_BASE_URL_PROD);
+        });
+    }
+    userStatus(req) {
+        if (req.user) {
+            return { message: 'Authenticated', user: req.user };
+        }
+        else {
+            return { message: 'Not Authenticated' };
+        }
     }
 };
 exports.AuthService = AuthService;

@@ -20,12 +20,13 @@ async function bootstrap() {
     });
     const PORT = process.env.PORT || 3000;
     app.setGlobalPrefix('/api/v1');
+    app.set('trust proxy', 1);
     app.use(session({
         secret: 'Elcho911∑å∂®∆√˜∆´ß∫¬∆å´ƒø˙¥ª•¶™£ƒ˙ˆ∆å∫˚¬®√',
         saveUninitialized: false,
         resave: false,
         cookie: {
-            sameSite: 'none',
+            sameSite: 'strict',
             secure: true,
             maxAge: 1000 * 60 * 60 * 24 * 7
         },

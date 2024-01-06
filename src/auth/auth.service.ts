@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import { PrismaService } from '../database/prisma.service';
 import { Profile } from 'passport-google-oauth20';
 import * as moment from 'moment';
-import process from 'process';
 
 @Injectable()
 export class AuthService {
@@ -49,7 +48,20 @@ export class AuthService {
 		return { message: 'Google Authentication' };
 	}
 
-	handleRedirect(res: Response) {
+	handleLogout(req: Request, res: Response) {
+		req.logout(function (err) {
+			if (err) {
+				return 'Error';
+			}
+			return res.redirect(
+				process.env.NODE_ENV === 'development'
+					? process.env.FRONTEND_BASE_URL_DEV!
+					: process.env.FRONTEND_BASE_URL_PROD!
+			);
+		});
+	}
+
+	redirect(res: Response) {
 		return res.redirect(
 			process.env.BACKEND_TEST_MODE === 'active'
 				? process.env.NODE_ENV === 'development'
@@ -67,19 +79,6 @@ export class AuthService {
 		} else {
 			return { success: false, user: null };
 		}
-	}
-
-	logout(req: Request, res: Response) {
-		req.logout(function (err) {
-			if (err) {
-				return 'Error';
-			}
-			return res.redirect(
-				process.env.NODE_ENV === 'development'
-					? process.env.FRONTEND_BASE_URL_DEV!
-					: process.env.FRONTEND_BASE_URL_PROD!
-			);
-		});
 	}
 
 	userStatus(req: Request) {

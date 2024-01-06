@@ -23,14 +23,14 @@ let AuthController = class AuthController {
     handleLogin() {
         return this.authService.handleLogin();
     }
-    handleRedirect(res) {
-        return this.authService.handleRedirect(res);
+    handleLogout(req, res) {
+        return this.authService.handleLogout(req, res);
+    }
+    redirect(res) {
+        return this.authService.redirect(res);
     }
     user(req) {
         return this.authService.user(req);
-    }
-    logout(req, res) {
-        return this.authService.logout(req, res);
     }
     userStatus(req) {
         return this.authService.userStatus(req);
@@ -45,13 +45,21 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "handleLogin", null);
 __decorate([
+    (0, common_1.Get)('logout'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "handleLogout", null);
+__decorate([
     (0, common_1.Get)('callback/google'),
     (0, common_1.UseGuards)(Guards_1.GoogleAuthGuard),
     __param(0, (0, common_1.Res)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], AuthController.prototype, "handleRedirect", null);
+], AuthController.prototype, "redirect", null);
 __decorate([
     (0, common_1.Get)('user'),
     __param(0, (0, common_1.Req)()),
@@ -59,14 +67,6 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "user", null);
-__decorate([
-    (0, common_1.Get)('logout'),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
-], AuthController.prototype, "logout", null);
 __decorate([
     (0, common_1.Get)('status'),
     __param(0, (0, common_1.Req)()),

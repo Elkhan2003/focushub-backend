@@ -7,12 +7,12 @@ export declare class AuthController {
     handleLogin(): {
         message: string;
     };
-    handleRedirect(res: Response): void;
+    handleLogout(req: Request, res: Response): void;
+    redirect(res: Response): void;
     user(req: Request): {
         success: boolean;
         user: Express.User;
     };
-    logout(req: Request, res: Response): void;
     userStatus(req: Request): {
         message: string;
         user: Express.User;

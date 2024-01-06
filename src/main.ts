@@ -4,6 +4,8 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import * as session from 'express-session';
 import * as passport from 'passport';
+import { PrismaClient } from '@prisma/client';
+import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
@@ -16,7 +18,12 @@ async function bootstrap() {
 			resave: false,
 			cookie: {
 				maxAge: 1000 * 60 * 60 * 24 * 7
-			}
+			},
+			store: new PrismaSessionStore(new PrismaClient(), {
+				checkPeriod: 2 * 60 * 1000,
+				dbRecordIdIsSessionId: true,
+				dbRecordIdFunction: undefined
+			})
 		})
 	);
 	app.use(passport.initialize());

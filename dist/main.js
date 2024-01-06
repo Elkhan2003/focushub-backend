@@ -6,6 +6,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 const session = require("express-session");
 const passport = require("passport");
+const client_1 = require("@prisma/client");
+const prisma_session_store_1 = require("@quixo3/prisma-session-store");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     const PORT = process.env.PORT || 3000;
@@ -16,7 +18,12 @@ async function bootstrap() {
         resave: false,
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 7
-        }
+        },
+        store: new prisma_session_store_1.PrismaSessionStore(new client_1.PrismaClient(), {
+            checkPeriod: 2 * 60 * 1000,
+            dbRecordIdIsSessionId: true,
+            dbRecordIdFunction: undefined
+        })
     }));
     app.use(passport.initialize());
     app.use(passport.session());

@@ -29,6 +29,13 @@ model User {
   Task            Task[]
 }
 
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String   @db.Text
+  expiresAt DateTime
+}
+
 model Task {
   userId    Int
   name      String
